@@ -72,4 +72,49 @@ routing.post('/registerUser', upload.single('profilePic') , (req, res, next)=>{
     )
 })
 
+routing.put('/editProfilePic/:uname', upload.single('profilePic'), (req, res, next) => {
+  
+  let uname= req.params.uname
+  let newPath= req.file.path
+  user_mod.updateProfilePic(uname, newPath).then(
+    (data) => {
+      res.send(data)
+    }
+  ).catch(
+    (err) => {
+      next(err)
+    }
+  )
+})
+
+routing.put('/editFullName/:uname', (req, res, next) => {
+  
+  let uname= req.params.uname
+  let fullName= req.body.fullName
+  user_mod.updateFullName(uname, fullName).then(
+    (data) => {
+      res.send(data)
+    }
+  ).catch(
+    (err) => {
+      next(err)
+    }
+  )
+})
+
+routing.put('/editBio/:uname', (req, res, next) => {
+  
+  let uname= req.params.uname
+  let bio= req.body.bio
+  user_mod.updateBio(uname, bio).then(
+    (data) => {
+      res.send(data)
+    }
+  ).catch(
+    (err) => {
+      next(err)
+    }
+  )
+})
+
 module.exports= routing;
