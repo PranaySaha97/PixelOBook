@@ -9,6 +9,7 @@ let app= express()
 
 app.use(cors())
 app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({extended: false}))
 app.use(requestLogger)
 app.use(routing)
 app.use(errorLogger)

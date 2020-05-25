@@ -7,7 +7,7 @@ const url = "mongodb://localhost:27017/PixelOBook";
 
 
 const Posts = Schema( {
-    '_id': {type: any, required: true},
+    '_id': {type: String, required: true},
     'postImg': {type: String, required: true},
     'likes': {type: Number, required: true},
     'uploadTime': {type: String, required: true},
@@ -15,7 +15,7 @@ const Posts = Schema( {
 }, {collection: "Posts"} )
 
 const Users = Schema( {
-    '_id': {type: any},
+    '_id': {type: String},
     'userName': {type: String, required: true},
     'fullName': {type: String, required: true},
     'emailId': {type: String, required: true},
