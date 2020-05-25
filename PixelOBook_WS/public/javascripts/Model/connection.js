@@ -20,8 +20,8 @@ const Users = Schema( {
     'fullName': {type: String, required: true},
     'emailId': {type: String, required: true},
     'password': {type: String, required: true},
-    'profilePic': {type: String, required: true},
-    'bio': {type: String, required: true},
+    'profilePic': {type: String},
+    'bio': {type: String, default: 'Hey there! I joined PixelOBook.'},
     'followers': {type: [], required: true},
     'following': {type: [], required: true},
     'posts': {type: [], required: true}

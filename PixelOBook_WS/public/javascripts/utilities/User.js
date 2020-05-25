@@ -4,7 +4,7 @@ class User {
         this.password = obj.password;
         this.fullName = obj.fullName;
         this.emailId= obj.emailId;
-        this.profilePic = obj.profilePic;
+        this.profilePic = '';
         this.bio = obj.bio;
         this.followers = [];
         this.following = [];

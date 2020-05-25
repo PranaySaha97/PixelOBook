@@ -58,8 +58,9 @@ routing.get('/fetchUsername/:username/:password', (req, res, next)=>{
 
 routing.post('/registerUser', upload.single('profilePic') , (req, res, next)=>{
     let user= new User(req.body)
-    user.profilePic= req.file.path
-
+    if (req.file){
+      user.profilePic= req.file.path
+    }
     user_mod.regUser(user).then(
       (data) => {
         res.json(data)
