@@ -2,18 +2,9 @@ const dbModel= require( './connection' )
 
 const pixelOBookDB = {}
 
-// pixelOBookDB.generateId = () => {
-//     return dbModel.getCustomersCollection().then( ( model ) => {
-//         return model.distinct( "Orders.orderID" ).then( ( ids ) => {
-//             let oId = Math.max( ...ids );
-//             return oId + 1;
-//         } )
-//     } )
-// }
-
 pixelOBookDB.findUser= ( uname, password ) =>{
     return dbModel.getUsersCollection().then( ( users )=>{
-        return users.findOne( {"userName": uname, 'password': password},{'_id': 0, 'fullName': 1} ).then( ( data )=>{
+        return users.findOne( {"userName": uname},{'_id': 0, 'fullName': 1, 'password': 1} ).then( ( data )=>{
             if( !data ) {
                 let err= new Error( 'User Credentials Mismatch !' )
                 err.status= 400;

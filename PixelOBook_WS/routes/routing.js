@@ -40,13 +40,12 @@ routing.get('/setupDb', (req, res, next) => {
     })
 })
 
-routing.get('/fetchUsername/:username/:password', (req, res, next)=>{
+routing.get('/fetchUserDet/:username', (req, res, next)=>{
     let username= req.params.username
-    let password= req.params.password
 
-    user_mod.findUser(username, password).then(
-      (fullName)=>{
-        res.json(fullName)
+    user_mod.findUser(username).then(
+      (userDet)=>{
+        res.json(userDet)
       }
     ).catch(
       (err)=>{
