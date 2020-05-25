@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 export class Register extends Component {
     constructor(props) {
@@ -53,17 +54,17 @@ export class Register extends Component {
                 break;
             case "userName":
                 let regexUsername = new RegExp(/^[A-z0-9]{5,}$/);
-                value == "" ? message = "field required" : regexUsername.test(value) ? message = "" : message = "Username should contain atleast 5 characters";
+                value === "" ? message = "field required" : regexUsername.test(value) ? message = "" : message = "Username should contain atleast 5 characters";
                 break;
             case "password":
-                value == "" ? message = "field required" : value.length < 5 ? message = "Password is weak" : message = "";
+                value === "" ? message = "field required" : value.length < 5 ? message = "Password is weak" : message = "";
                 break;
             case "reEnterPassword":
-                value != this.state.form.password ? message = "Passwords don't match" : message = "";
+                value !== this.state.form.password ? message = "Passwords don't match" : message = "";
                 break;
             case "emailid":
                 let regexEmail = new RegExp(/^[A-z0-9]+[@][A-z]+\.[A-z]+$/)
-                value == "" ? message = "field required" : regexEmail.test(value) ? message = "" : message = "Enter a valid email id";
+                value === "" ? message = "field required" : regexEmail.test(value) ? message = "" : message = "Enter a valid email id";
                 break;
             default:
                 break;
@@ -73,7 +74,7 @@ export class Register extends Component {
         this.setState({
             formErrMessage: formErrMessageObj
         });
-        validity = message == "" ? true : false;
+        validity = message === "" ? true : false;
         let formValidObj = this.state.formValid;
         formValidObj[name+"Valid"] = validity;
         formValidObj.btnValid = formValidObj.userNameValid && formValidObj.passwordValid 
@@ -83,6 +84,35 @@ export class Register extends Component {
         });
     }
 
+
+    handleSubmit = ( event ) => {
+        event.preventDefault();
+        let userObj = {
+                _id: "",
+                userName: this.state.form.userName,
+                fullName: this.state.form.name,
+                emailId: this.state.form.emailid,
+                password: this.state.form.password,
+                profilePic : "",
+                bio : "",
+                followers: [],
+                following: [],
+                posts: []
+        }
+        
+        axios.post("http://localhost:1050/registerUser",userObj).then(res=>{
+            console.log(res.data)
+            this.setState({
+                successMessage: res.data,
+                errorMessage: ""
+            })
+        }).catch(err=>{
+            this.setState({
+                errorMessage: "User not registered!",
+                successMessage: ""
+            })
+        })
+    }
     
     render() {
         let errMessage = this.state.formErrMessage;
@@ -90,7 +120,7 @@ export class Register extends Component {
             <div>
                 <div className="row mt-5">
                     <div className="banner-section">
-                        <img src={require('./Assets/banner.jpg')} />
+                        <img src={require('./Assets/banner.jpg')} alt="banner"/>
                     </div>
                     <div className="col-md-4 offset-md-8 col-sm-12 ">
                         <div className="card box">
@@ -98,7 +128,7 @@ export class Register extends Component {
                                 <h3>Register for new user</h3>
                             </div>
                             <div className="card-body">
-                                <form>
+                                <form onSubmit={this.handleSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="name">Name:</label>
                                         <input type="text" name="name" id="name" 
@@ -135,12 +165,15 @@ export class Register extends Component {
                                     </div>
                                     <div className="text-danger">{errMessage.emailidError}</div>
                                     <Link to={"/"} >
-                                        <button className="btn btn-danger">Back to login</button>
+                                        <button type="button" className="btn btn-danger">Back to login</button>
                                     </Link>
                                     &nbsp;
                                     <button type="submit" className="btn btn-dark" 
                                     disabled={!this.state.formValid.btnValid}>Register</button>
                                 </form>
+                                <div className="text-success">{this.state.successMessage}</div>
+                                <div className="text-danger">{this.state.errorMessage}</div>
+
                             </div>
                         </div>
                     </div>

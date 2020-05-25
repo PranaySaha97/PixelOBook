@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Login from './components/Login';
 import Register from './components/Register';
 
@@ -13,15 +12,22 @@ export class App extends Component {
     super(props)
   
     this.state = {
-      userName: "",
-       isLoggedin: false
+      name: "",
+      isLoggedin: false
     }
   }
 
-  setUserName = (name) => {
+  setName = (name) => {
     this.setState({
-      userName: name,
+      name: name,
       isLoggedin: true
+    })
+  }
+
+  logout = () => {
+    this.setState({
+      name: "",
+      isLoggedin: false
     })
   }
   
@@ -37,10 +43,10 @@ export class App extends Component {
             this.state.isLoggedin?
             <ul className="navbar-nav ml-auto">
               <li className="nav-link">
-                Welcome, {this.state.userName}
+                Welcome, {this.state.name}
               </li>
               <li className="navbar-nav nav-link">
-              <button className="nav-button-main grow">Log out</button>
+              <button className="nav-button-main grow" onClick={this.logout}>Log out</button>
               </li>
             </ul>
             : null
@@ -50,13 +56,12 @@ export class App extends Component {
           this.state.isLoggedin?
           <Redirect to={"dashboard/"} push/>
           :
-          null
+          <Redirect to={"/"} push/>
         }
       </div>
       <Switch>
-        <Route path="/" exact render={()=> <Login setUserName={this.setUserName}/> }  />
+        <Route path="/" exact render={()=> <Login setName={this.setName}/> }  />
         <Route path="/register" exact component={Register} /> }  />
-
       </Switch>
     </Router>
     )

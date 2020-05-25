@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 export class Login extends Component {
 
@@ -57,12 +58,30 @@ export class Login extends Component {
         })
     }
     
+    handleSubmit = (event) => {
+        event.preventDefault();
+        let url = "http://localhost:1050/fetchUserDet/"+this.state.form.userName;
+        axios.get(url).then(res=>{
+            if(res.data.password === this.state.form.password){
+                this.props.setName(res.data.fullName)
+            } else {
+                this.setState({
+                    errorMessage: "Incorrect Password"
+                })
+            }
+        }).catch(err=>{
+            this.setState({
+                errorMessage: "User does not exist please register to continue"
+            })
+        })
+    }
+    
     render() {
         return (
             <div>
                 <div className="row mt-5">
                     <div className="banner-section">
-                        <img src={require('./Assets/banner.jpg')} />
+                        <img src={require('./Assets/banner.jpg')} alt="banner" />
                     </div>
                     <div className="col-md-4 offset-md-8 col-sm-12 mt-5">
                         <div className="card box">
@@ -70,7 +89,7 @@ export class Login extends Component {
                                 <h3>Login</h3>
                             </div>
                             <div className="card-body">
-                                <form>
+                                <form onSubmit={this.handleSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="userName">Username:</label>
                                         <input type="text" name="userName" id="userName" 
