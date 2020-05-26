@@ -62,8 +62,9 @@ export class Login extends Component {
         event.preventDefault();
         let url = "http://localhost:1050/fetchUserDet/"+this.state.form.userName;
         axios.get(url).then(res=>{
+            
             if(res.data.password === this.state.form.password){
-                this.props.setName(res.data.fullName)
+                this.props.setName(res.data.fullName, res.data.userName)
             } else {
                 this.setState({
                     errorMessage: "Incorrect Password"
@@ -79,7 +80,7 @@ export class Login extends Component {
     render() {
         return (
             <div>
-                <div className="row mt-5">
+                <div className="row mt-5 container-fluid">
                     <div className="banner-section">
                         <img src={require('./Assets/banner.jpg')} alt="banner" />
                     </div>
