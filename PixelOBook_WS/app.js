@@ -14,5 +14,5 @@ app.use(requestLogger)
 app.use(routing)
 app.use(errorLogger)
 
-app.listen(3000)
-console.log('Server started at port 3000.')
+app.listen(1050)
+console.log('Server started at port 1050.')

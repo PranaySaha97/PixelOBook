@@ -4,7 +4,7 @@ const pixelOBookDB = {}
 
 pixelOBookDB.findUser= ( uname, password ) =>{
     return dbModel.getUsersCollection().then( ( users )=>{
-        return users.findOne( {"userName": uname},{'_id': 0, 'fullName': 1, 'password': 1} ).then( ( data )=>{
+        return users.findOne( {"userName": uname},{'_id': 0} ).then( ( data )=>{
             if( !data ) {
                 let err= new Error( 'User Credentials Mismatch !' )
                 err.status= 400;
@@ -124,7 +124,7 @@ pixelOBookDB.fetchAllPost = () => {
 pixelOBookDB.fetchAllUserNames = () => {
     return dbModel.getUsersCollection().then(
         (users) => {
-            return users.find( {}, {_id:0, "userName":1} ).then(
+            return users.find( {}, {_id:0, "userName":1, "fullName": 1, "profilePic": 1} ).then(
                 (data) => {
                     if (!data || data.length === 0){
                         let err= new Error ("Couldn't fetch usernames.")
