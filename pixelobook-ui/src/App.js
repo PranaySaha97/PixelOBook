@@ -4,7 +4,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { createBrowserHistory as history} from 'history';
+import { FaAlignRight } from 'react-icons/fa';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import Login from './components/Login';
 import Register from './components/Register';
@@ -19,8 +21,15 @@ export class App extends Component {
     this.state = {
       userName: "",
       name: "",
-      isLoggedin: false
+      isLoggedin: false,
+      toggle: false
     }
+  }
+
+  Toggle = () => {
+    this.setState({
+      toggle: !this.state.toggle
+    })
   }
 
   setName = (name, userName) => {
@@ -48,21 +57,27 @@ export class App extends Component {
           <span className="navbar-brand">
             Pixel-O-Book
           </span>
+          
           {
             this.state.isLoggedin?
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-link">
-                Welcome, {this.state.name}
-              </li>
-              <li className="navbar-nav nav-link">
-                <Link to="/editProfile">
-                  <button className="nav-button-main grow">Edit profile</button>
-                </Link>
-              </li>
-              <li className="navbar-nav nav-link">
-                <button className="nav-button-main grow" onClick={this.logout}>Log out</button>
-              </li>
-            </ul>
+            <Dropdown className="navbar-nav ml-auto">
+              <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                  Welcome, {this.state.name}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item className="navbar-nav nav-link">
+                  <button className="btn btn-white btn-block" >
+                    <Link to="/editProfile">
+                      <span className="text-dark">Edit profile</span>
+                    </Link>
+                  </button>
+                </Dropdown.Item>
+                <Dropdown.Item className="navbar-nav nav-link">
+                  <button className="btn btn-white btn-block" onClick={this.logout}>Log out</button>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             : null
           }
         </nav>
