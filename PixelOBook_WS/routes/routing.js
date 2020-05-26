@@ -3,12 +3,13 @@ let routing= express.Router()
 let dbsetup= require('../public/javascripts/Model/dbSetup')
 let user_mod= require('../public/javascripts/Model/user')
 let User= require('../public/javascripts/utilities/User')
+let Post = require('../public/javascripts/utilities/Post')
 let multer= require('multer')
 
 let storage= multer.diskStorage(
   {
     destination: function(req, file, cb){
-      cb(null, 'uploads/profilePics/')
+      cb(null, 'uploads/')
     },
 
     filename: function(req, file, cb){
@@ -31,6 +32,7 @@ let upload= multer({
     }
   }
 })
+
 
 routing.get('/setupDb', (req, res, next) => {
     dbsetup.setupDb().then((data) => {
@@ -106,6 +108,60 @@ routing.put('/editBio/:uname', (req, res, next) => {
   let uname= req.params.uname
   let bio= req.body.bio
   user_mod.updateBio(uname, bio).then(
+    (data) => {
+      res.send(data)
+    }
+  ).catch(
+    (err) => {
+      next(err)
+    }
+  )
+})
+
+routing.put('/uploadPost/:userName', upload.single('postImg'), (req, res, next) => {
+  let userName = req.params.userName
+  let newPost = new Post(req.body)
+  newPost.postImg = req.file.path
+  user_mod.addPost(userName, newPost).then(
+    (data) => {
+      res.send(data)
+    }
+  ).catch (
+    (err) => {
+      next(err)
+    }
+  )
+})
+
+routing.get('/fetchAllPosts', (req, res, next) => {
+  user_mod.fetchAllPost().then(
+    (data) => {
+      res.json(data)
+    }
+  ).catch (
+    (err) => {
+      next(err)
+    }
+  )
+})
+
+routing.get('/fetchAllUserNames', (req, res, next) => {
+  user_mod.fetchAllUserNames().then(
+    (data) => {
+      res.json(data)
+    }
+  ).catch (
+    (err) => {
+      next(err)
+    }
+  )
+})
+
+routing.put('/followUser/:uname/:to_follow', (req, res, next) =>{
+  let uname= req.params.uname
+  let to_follow= req.params.to_follow
+
+  user_mod.followUser(uname, to_follow).then(
     (data) => {
       res.send(data)
     }

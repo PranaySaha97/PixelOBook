@@ -5,15 +5,6 @@ Mongoose.set( 'useCreateIndex', true )
 const url = "mongodb://localhost:27017/PixelOBook";
 
 
-
-const Posts = Schema( {
-    '_id': {type: String, required: true},
-    'postImg': {type: String, required: true},
-    'likes': {type: Number, required: true},
-    'uploadTime': {type: String, required: true},
-    'comments': {type: [], required: true}
-}, {collection: "Posts"} )
-
 const Users = Schema( {
     '_id': {type: String},
     'userName': {type: String, required: true, unique: true},
@@ -31,16 +22,6 @@ const Users = Schema( {
 
 
 let collection = {};
-
-collection.getPostsCollection = () => {
-    return Mongoose.connect( url, { useNewUrlParser: true } ).then( ( database ) => {
-        return database.model( 'Posts', Posts )
-    } ).catch( () => {
-        let err = new Error( "Could not connect to Database" );
-        err.status = 500;
-        throw err;
-    } )
-}
 
 collection.getUsersCollection = () => {
     return Mongoose.connect( url, { useNewUrlParser: true } ).then( ( database ) => {

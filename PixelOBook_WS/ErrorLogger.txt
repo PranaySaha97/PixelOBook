@@ -45,3 +45,82 @@ Mon May 25 2020 13:17:57 GMT+0530 (India Standard Time) - ValidationError: Users
     at G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\mongoose\lib\document.js:2385:17
     at G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\mongoose\lib\schematype.js:1181:9
     at processTicksAndRejections (internal/process/task_queues.js:79:11)
+Tue May 26 2020 12:28:04 GMT+0530 (India Standard Time) - Error: ENOENT: no such file or directory, open 'G:\INFOSYS\PixelOBook\PixelOBook_WS\uploads\postImages\Tue May 26 2020WhatsApp Image 2019-04-27 at 10.11.58 PM.jpeg'
+Tue May 26 2020 12:32:44 GMT+0530 (India Standard Time) - Error: ENOENT: no such file or directory, open 'G:\INFOSYS\PixelOBook\PixelOBook_WS\uploads\postImages\Tue May 26 2020WhatsApp Image 2019-04-27 at 10.11.04 PM.jpeg'
+Tue May 26 2020 12:35:22 GMT+0530 (India Standard Time) - Error: Could not connect to Database
+    at G:\INFOSYS\PixelOBook\PixelOBook_WS\public\javascripts\Model\connection.js:30:19
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+Tue May 26 2020 12:35:45 GMT+0530 (India Standard Time) - Error: Could not connect to Database
+    at G:\INFOSYS\PixelOBook\PixelOBook_WS\public\javascripts\Model\connection.js:30:19
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+Tue May 26 2020 12:36:51 GMT+0530 (India Standard Time) - Error: Could not connect to Database
+    at G:\INFOSYS\PixelOBook\PixelOBook_WS\public\javascripts\Model\connection.js:30:19
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+Tue May 26 2020 12:38:11 GMT+0530 (India Standard Time) - TypeError: collection.getPostsCollection is not a function
+    at Object.exports.setupDb (G:\INFOSYS\PixelOBook\PixelOBook_WS\public\javascripts\Model\dbSetup.js:4:23)
+    at G:\INFOSYS\PixelOBook\PixelOBook_WS\routes\routing.js:38:13
+    at Layer.handle [as handle_request] (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\layer.js:95:5)
+    at next (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\route.js:137:13)
+    at Route.dispatch (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\layer.js:95:5)
+    at G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:281:22
+    at Function.process_params (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:335:12)
+    at next (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:275:10)
+    at Function.handle (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:174:3)
+    at router (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:317:13)
+    at G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:284:7
+    at Function.process_params (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:335:12)
+    at next (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:275:10)
+Tue May 26 2020 12:39:19 GMT+0530 (India Standard Time) - TypeError: collection.getPostsCollection is not a function
+    at Object.exports.setupDb (G:\INFOSYS\PixelOBook\PixelOBook_WS\public\javascripts\Model\dbSetup.js:4:23)
+    at G:\INFOSYS\PixelOBook\PixelOBook_WS\routes\routing.js:38:13
+    at Layer.handle [as handle_request] (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\layer.js:95:5)
+    at next (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\route.js:137:13)
+    at Route.dispatch (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\layer.js:95:5)
+    at G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:281:22
+    at Function.process_params (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:335:12)
+    at next (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:275:10)
+    at Function.handle (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:174:3)
+    at router (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:317:13)
+    at G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:284:7
+    at Function.process_params (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:335:12)
+    at next (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\express\lib\router\index.js:275:10)
+Tue May 26 2020 12:40:41 GMT+0530 (India Standard Time) - MulterError: File too large
+    at abortWithCode (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\multer\lib\make-middleware.js:79:22)
+    at FileStream.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\multer\lib\make-middleware.js:141:11)
+    at FileStream.emit (events.js:311:20)
+    at PartStream.onData (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\busboy\lib\types\multipart.js:220:18)
+    at PartStream.emit (events.js:311:20)
+    at addChunk (_stream_readable.js:294:12)
+    at readableAddChunk (_stream_readable.js:275:11)
+    at PartStream.Readable.push (_stream_readable.js:209:10)
+    at Dicer._oninfo (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\Dicer.js:191:36)
+    at SBMH.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\Dicer.js:127:10)
+    at SBMH.emit (events.js:311:20)
+    at SBMH._sbmh_feed (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\streamsearch\lib\sbmh.js:188:10)
+    at SBMH.push (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\streamsearch\lib\sbmh.js:56:14)
+    at Dicer._write (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\Dicer.js:109:17)
+    at doWrite (_stream_writable.js:441:12)
+    at writeOrBuffer (_stream_writable.js:425:5)
+Tue May 26 2020 12:45:26 GMT+0530 (India Standard Time) - MulterError: Unexpected field
+    at wrappedFileFilter (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\multer\index.js:40:19)
+    at Busboy.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\multer\lib\make-middleware.js:114:7)
+    at Busboy.emit (events.js:311:20)
+    at Busboy.emit (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\busboy\lib\main.js:38:33)
+    at PartStream.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\busboy\lib\types\multipart.js:213:13)
+    at PartStream.emit (events.js:311:20)
+    at HeaderParser.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\Dicer.js:51:16)
+    at HeaderParser.emit (events.js:311:20)
+    at HeaderParser._finish (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\HeaderParser.js:68:8)
+    at SBMH.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\HeaderParser.js:40:12)
+    at SBMH.emit (events.js:311:20)
+    at SBMH._sbmh_feed (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\streamsearch\lib\sbmh.js:95:16)
+    at SBMH.push (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\streamsearch\lib\sbmh.js:56:14)
+    at HeaderParser.push (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\HeaderParser.js:46:19)
+    at Dicer._oninfo (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\Dicer.js:197:25)
+    at SBMH.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\Dicer.js:127:10)

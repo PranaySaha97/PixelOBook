@@ -85,5 +85,76 @@ pixelOBookDB.updateBio = (username, bio) => {
     )
 }
 
+pixelOBookDB.addPost = (uname, post) => {
+    return dbModel.getUsersCollection().then(
+        (users) => {
+            return users.updateOne( {'userName': uname}, { $push: { 'posts': post } } ).then(
+                (update) => {
+                    if (update.nModified === 1){
+                        return "Image Posted Successfully."
+                    }else {
+                        let err= new Error (" Couldn't post image.")
+                        err.status= 400;
+                        throw err
+                    }
+                }
+            )
+        }
+    )
+}
+
+pixelOBookDB.fetchAllPost = () => {
+    return dbModel.getUsersCollection().then(
+        (users) => {
+            return users.find( {}, {_id:0, "posts.postImg":1} ).then(
+                (data) => {
+                    if (data || data.length>0){
+                        return data
+                    }else{ 
+                        let err= new Error ("Couldn't fetch posts.")
+                        err.status= 400;
+                        throw err
+                    }
+                }
+            )
+        }
+    )
+}
+
+pixelOBookDB.fetchAllUserNames = () => {
+    return dbModel.getUsersCollection().then(
+        (users) => {
+            return users.find( {}, {_id:0, "userName":1} ).then(
+                (data) => {
+                    if (!data || data.length === 0){
+                        let err= new Error ("Couldn't fetch usernames.")
+                        err.status= 400;
+                        throw err
+                    }else {
+                        return data
+                    }
+                }
+            )
+        }
+    )
+}
+
+pixelOBookDB.followUser = (uname, to_follow) => {
+    return dbModel.getUsersCollection().then(
+        (users) => {
+            return users.updateOne({'userName': uname}, { $push: {'followers': to_follow} }).then(
+                (update) => {
+                    if (update.nModified === 1){
+                        return "You are now following "+to_follow
+                    }else {
+                        let err= new Error ("Couldn't follow user")
+                        err.status= 400;
+                        throw err
+                    }
+                }
+            )
+        }
+    )
+}
 
 module.exports= pixelOBookDB;
