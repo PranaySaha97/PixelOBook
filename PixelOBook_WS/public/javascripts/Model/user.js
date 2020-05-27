@@ -20,7 +20,7 @@ pixelOBookDB.regUser = (userObj) => {
         return users.insertMany([userObj, ]).then( 
                 (data) => {
                     if (data){
-                        return "User Registered Successfully"
+                        return 'User Registered Successfully'
                     }else {
                         let err= new Error( 'Unable to Register User !' )
                         err.status= 500;
@@ -86,6 +86,7 @@ pixelOBookDB.updateBio = (username, bio) => {
 }
 
 pixelOBookDB.addPost = (uname, post) => {
+
     return dbModel.getUsersCollection().then(
         (users) => {
             return users.updateOne( {'userName': uname}, { $push: { 'posts': post } } ).then(
@@ -142,12 +143,47 @@ pixelOBookDB.fetchAllUserNames = () => {
 pixelOBookDB.followUser = (uname, to_follow) => {
     return dbModel.getUsersCollection().then(
         (users) => {
-            return users.updateOne({'userName': uname}, { $push: {'followers': to_follow} }).then(
+            return users.updateOne({'userName': uname}, { $push: {'following': to_follow} }).then(
                 (update) => {
                     if (update.nModified === 1){
-                        return "You are now following "+to_follow
+                        return users.updateOne( {'userName': to_follow} , {$push: {'followers': uname}}).then(
+                            (update_1) => {
+                                if(update_1.nModified === 1){
+                                    return "You are now following "+to_follow
+                                }else {
+                                    let err= new Error ("Couldn't follow user")
+                                    err.status= 400;
+                                    throw err
+                                }
+                                
+                            }
+                        )
+                    }  
+                }
+            )
+        }
+    )
+}
+
+pixelOBookDB.getFollowersPost = (uname) => {
+    return dbModel.getUsersCollection().then(
+        (users) => {
+            return users.findOne({'userName': uname}, {'_id':0, 'following': 1} ).then(
+                (result) => {
+                    if (result){
+                        return users.find({'userName': {$in: result.following}},{'_id':0, 'posts.postImg':1}).then(
+                            (data) => {
+                                if(data){
+                                    return data
+                                }else {
+                                    let err= new Error ("Nothing to show yet.")
+                                    err.status= 400;
+                                    throw err
+                                }
+                            }
+                        )
                     }else {
-                        let err= new Error ("Couldn't follow user")
+                        let err= new Error ("No followers yet.")
                         err.status= 400;
                         throw err
                     }
@@ -156,5 +192,24 @@ pixelOBookDB.followUser = (uname, to_follow) => {
         }
     )
 }
+
+pixelOBookDB.getMyPost = (uname) => {
+    return dbModel.getUsersCollection().then(
+        (users) => {
+            return users.findOne({'userName': uname}, {'_id':0, 'posts':1}).then(
+                (posts) => {
+                    if (posts){
+                        return posts
+                    }else {
+                        let err= new Error ("No posts fetched.")
+                        err.status= 400;
+                        throw err
+                    }
+                }
+            )
+        }
+    )
+}
+
 
 module.exports= pixelOBookDB;

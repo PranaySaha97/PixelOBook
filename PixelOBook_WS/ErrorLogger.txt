@@ -128,3 +128,69 @@ Tue May 26 2020 23:22:07 GMT+0530 (India Standard Time) - Error: User Credential
     at G:\INFOSYS\PixelOBook\PixelOBook_WS\public\javascripts\Model\user.js:9:26
     at runMicrotasks (<anonymous>)
     at processTicksAndRejections (internal/process/task_queues.js:97:5)
+Wed May 27 2020 12:37:30 GMT+0530 (India Standard Time) - MulterError: Unexpected field
+    at wrappedFileFilter (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\multer\index.js:40:19)
+    at Busboy.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\multer\lib\make-middleware.js:114:7)
+    at Busboy.emit (events.js:311:20)
+    at Busboy.emit (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\busboy\lib\main.js:38:33)
+    at PartStream.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\busboy\lib\types\multipart.js:213:13)
+    at PartStream.emit (events.js:311:20)
+    at HeaderParser.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\Dicer.js:51:16)
+    at HeaderParser.emit (events.js:311:20)
+    at HeaderParser._finish (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\HeaderParser.js:68:8)
+    at SBMH.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\HeaderParser.js:40:12)
+    at SBMH.emit (events.js:311:20)
+    at SBMH._sbmh_feed (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\streamsearch\lib\sbmh.js:159:14)
+    at SBMH.push (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\streamsearch\lib\sbmh.js:56:14)
+    at HeaderParser.push (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\HeaderParser.js:46:19)
+    at Dicer._oninfo (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\Dicer.js:197:25)
+    at SBMH.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\Dicer.js:127:10)
+Wed May 27 2020 13:17:18 GMT+0530 (India Standard Time) - ObjectParameterError: Parameter "obj" to Document() must be an object, got function model(doc, fields, skipId) {
+      model.hooks.execPreSync('createModel', doc);
+      if (!(this instanceof model)) {
+        return new model(doc, fields, skipId);
+      }
+      const discriminatorKey = model.schema.options.discriminatorKey;
+
+      if (model.discriminators == null || doc == null || doc[discriminatorKey] == null) {
+        Model.call(this, doc, fields, skipId);
+        return;
+      }
+
+      // If discriminator key is set, use the discriminator instead (gh-7586)
+      const Discriminator = model.discriminators[doc[discriminatorKey]] ||
+        getDiscriminatorByValue(model, doc[discriminatorKey]);
+      if (Discriminator != null) {
+        return new Discriminator(doc, fields, skipId);
+      }
+
+      // Otherwise, just use the top-level model
+      Model.call(this, doc, fields, skipId);
+    }
+    at new ObjectParameterError (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\mongoose\lib\error\objectParameter.js:25:11)
+    at model.Document (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\mongoose\lib\document.js:89:11)
+    at model.Model (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\mongoose\lib\model.js:105:12)
+    at new model (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\mongoose\lib\model.js:4734:15)
+    at Array.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\mongoose\lib\model.js:3320:17)
+    at _start (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\mongoose\lib\helpers\parallelLimit.js:27:37)
+    at parallelLimit (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\mongoose\lib\helpers\parallelLimit.js:23:5)
+    at Function.Model.$__insertMany (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\mongoose\lib\model.js:3350:3)
+    at G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\kareem\index.js:369:33
+    at processTicksAndRejections (internal/process/task_queues.js:79:11)
+Wed May 27 2020 13:22:45 GMT+0530 (India Standard Time) - MulterError: Unexpected field
+    at wrappedFileFilter (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\multer\index.js:40:19)
+    at Busboy.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\multer\lib\make-middleware.js:114:7)
+    at Busboy.emit (events.js:311:20)
+    at Busboy.emit (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\busboy\lib\main.js:38:33)
+    at PartStream.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\busboy\lib\types\multipart.js:213:13)
+    at PartStream.emit (events.js:311:20)
+    at HeaderParser.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\Dicer.js:51:16)
+    at HeaderParser.emit (events.js:311:20)
+    at HeaderParser._finish (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\HeaderParser.js:68:8)
+    at SBMH.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\HeaderParser.js:40:12)
+    at SBMH.emit (events.js:311:20)
+    at SBMH._sbmh_feed (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\streamsearch\lib\sbmh.js:159:14)
+    at SBMH.push (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\streamsearch\lib\sbmh.js:56:14)
+    at HeaderParser.push (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\HeaderParser.js:46:19)
+    at Dicer._oninfo (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\Dicer.js:197:25)
+    at SBMH.<anonymous> (G:\INFOSYS\PixelOBook\PixelOBook_WS\node_modules\dicer\lib\Dicer.js:127:10)

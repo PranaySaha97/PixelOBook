@@ -172,4 +172,29 @@ routing.put('/followUser/:uname/:to_follow', (req, res, next) =>{
   )
 })
 
+routing.get('/getFollowersPosts/:uname', (req, res, next) => {
+  let uname= req.params.uname
+  user_mod.getFollowersPost(uname).then(
+    (posts) =>{
+      res.json(posts)
+    }
+  ).catch(
+    (err) => {
+      next(err)
+    }
+  )
+})
+
+routing.get('/getMyPosts/:uname', (req, res, next) => {
+  let uname= req.params.uname
+  user_mod.getMyPost(uname).then(
+    (posts) => {
+      res.json(posts)
+    }
+  ).catch(
+    (err) => {
+      next(err)
+    }
+  )
+})
 module.exports= routing;

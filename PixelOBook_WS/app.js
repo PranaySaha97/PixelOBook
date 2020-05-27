@@ -8,6 +8,7 @@ let errorLogger= require('./public/javascripts/utilities/errorLogger')
 let app= express()
 
 app.use(cors())
+app.use('/uploads',express.static('uploads'))
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended: false}))
 app.use(requestLogger)
