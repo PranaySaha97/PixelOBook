@@ -118,7 +118,7 @@ export class Register extends Component {
         let errMessage = this.state.formErrMessage;
         return (
             <div>
-                <div className="row mt-5 container-fluid">
+                <div className="row mt-3 container-fluid">
                     <div className="banner-section">
                         <img src={require('./Assets/banner.jpg')} alt="banner"/>
                     </div>
