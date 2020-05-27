@@ -13,10 +13,12 @@ class EditProfile extends Component {
              bio: "",
              update: {
                  bio: "",
-                 fullName: ""
+                 fullName: "",
+                 profilePic: null
              },
             successMessage: "",
-            errorMessage: ""
+            errorMessage: "",
+            uploadStatus: ""
         }
         
         this.getUserDetails();
@@ -25,7 +27,7 @@ class EditProfile extends Component {
     getUserDetails = () => {
         
         axios.get("http://localhost:1050/fetchUserDet/"+this.state.userName).then(res=>{
-            console.log(res.data)
+            
             this.setState({
                 bio: res.data.bio,
                 name: res.data.fullName
@@ -49,7 +51,7 @@ class EditProfile extends Component {
             bio: this.state.update.bio
         }
         axios.put('http://localhost:1050/editBio/'+this.state.userName,bioObj).then(res=>{
-            console.log(res.data)
+            
             this.setState({
                 successMessage: res.data,
                 errorMessage: ""
@@ -67,7 +69,7 @@ class EditProfile extends Component {
             fullName: this.state.update.fullName
         }
         axios.put('http://localhost:1050/editFullName/'+this.state.userName,fullNameObj).then(res=>{
-            console.log(res.data)
+        
             this.setState({
                 successMessage: res.data,
                 errorMessage: ""
@@ -80,6 +82,42 @@ class EditProfile extends Component {
             })
         })
 
+    }
+
+    profilePicSelected = ( event ) => {
+        this.setState({
+            update: {
+                ...this.state.update,["profilePic"]: event.target.files[0] 
+            }
+        })
+    }
+
+    uploadProfilePic = () => {
+        let url = 'http://localhost:1050/editProfilePic/'+this.state.userName;
+        const fd = new FormData();
+        fd.append('profilePic', this.state.update.profilePic, this.state.update.profilePic.name);
+        axios.put(url, fd,{
+            onUploadProgress: ProgressEvent => {
+                    let val = Math.round(ProgressEvent.loaded / ProgressEvent.total * 100)
+                    if(val<100){
+                        this.setState({
+                            uploadStatus: "uploading..."
+                        })
+                    }
+                }
+        }).then(res=>{
+            this.setState({
+                successMessage: res.data,
+                errorMessage: "",
+                uploadStatus: ""
+            })
+        }).catch(err=>{
+            this.setState({
+                errorMessage: "Update failed!",
+                successMessage: "",
+                uploadStatus: ""
+            })
+        })
     }
     
     render() {
@@ -103,9 +141,26 @@ class EditProfile extends Component {
                         }
                         <div className="card mt-2">
                             <div className="card-body">
-                            <div className="row">
+                                <div className="row">
                                     <div className="col-3">
-                                        <span className="h5">enter full name</span>
+                                        <span>Select profile picture</span>
+                                    </div>
+                                    <div className="col-6">
+                                        <input type="file" onChange={this.profilePicSelected}/>
+                                        {this.state.uploadStatus}
+                                    </div>
+                                    <div className="col-3">
+                                        <button className="btn btn-primary"
+                                        onClick={this.uploadProfilePic}
+                                        disabled={this.state.update.profilePic===null ? true: false}>
+                                            Upload image
+                                        </button>
+                                    </div>
+                                </div>
+                                <br />
+                                <div className="row">
+                                    <div className="col-3">
+                                        <span>enter full name</span>
                                     </div>
                                     <div className="col-6">
                                         <input type="text" className="form-control" 
@@ -114,7 +169,9 @@ class EditProfile extends Component {
                                         placeholder={this.state.name}/>
                                     </div>
                                     <div className="col-3">
-                                        <button className="btn btn-primary" onClick={this.updatefullName}>
+                                        <button className="btn btn-primary" 
+                                        onClick={this.updatefullName}
+                                        disabled={this.state.update.fullName === ""?true:false}>
                                             Update name
                                         </button>
                                     </div>
@@ -122,7 +179,7 @@ class EditProfile extends Component {
                                 <br />
                                 <div className="row">
                                     <div className="col-3">
-                                        <span className="h5">enter bio</span>
+                                        <span>enter bio</span>
                                     </div>
                                     <div className="col-6">
                                         <input type="text" className="form-control" 
@@ -131,7 +188,8 @@ class EditProfile extends Component {
                                         placeholder={this.state.bio}/>
                                     </div>
                                     <div className="col-3">
-                                        <button className="btn btn-primary" onClick={this.updateBio}>
+                                        <button className="btn btn-primary" onClick={this.updateBio}
+                                         disabled={this.state.update.bio === ""?true:false}>
                                             Update bio
                                         </button>
                                     </div>

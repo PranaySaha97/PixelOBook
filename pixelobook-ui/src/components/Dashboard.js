@@ -22,7 +22,7 @@ export class Dashboard extends Component {
     getUserDetails = () => {
         
         axios.get("http://localhost:1050/fetchUserDet/"+this.state.userName).then(res=>{
-            console.log(res.data)
+            
             this.setState({
                 bio: res.data.bio,
                 fullName: res.data.fullName
