@@ -1,5 +1,6 @@
 class Post {
     constructor(obj) {
+        this.postName= '',
         this.postImg = '',
         this.aboutImg= '',
         this.likes = 0,

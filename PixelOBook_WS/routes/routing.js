@@ -60,7 +60,7 @@ routing.get('/fetchUserDet/:username', (req, res, next)=>{
 routing.post('/registerUser', upload.single('profilePic') , (req, res, next)=>{
     let user= new User(req.body)
     if (req.file){
-      user.profilePic= req.file.path
+      user.profilePic= req.file.paths
     }
     user_mod.regUser(user).then(
       (data) => {
@@ -122,6 +122,8 @@ routing.put('/uploadPost/:userName', upload.single('postImg'), (req, res, next) 
   let userName = req.params.userName
   let newPost = new Post(req.body)
   newPost.postImg = req.file.path
+  newPost.uploadTime = new Date().toLocaleDateString()
+  newPost.postName =  req.file.filename
   user_mod.addPost(userName, newPost).then(
     (data) => {
       res.send(data)
