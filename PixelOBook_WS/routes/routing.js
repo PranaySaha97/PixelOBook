@@ -120,8 +120,9 @@ routing.put('/editBio/:uname', (req, res, next) => {
 
 routing.put('/uploadPost/:userName', upload.single('postImg'), (req, res, next) => {
   let userName = req.params.userName
-  let newPost = new Post(req.body)
+  let newPost = new Post()
   newPost.postImg = req.file.path
+  newPost.aboutImg= req.body.aboutImg
   newPost.uploadTime = new Date().toLocaleDateString()
   newPost.postName =  req.file.filename
   user_mod.addPost(userName, newPost).then(
@@ -189,7 +190,7 @@ routing.get('/getFollowersPosts/:uname', (req, res, next) => {
 
 routing.get('/getMyPosts/:uname', (req, res, next) => {
   let uname= req.params.uname
-  user_mod.getMyPost(uname).then(
+  user_mod.getMyPosts(uname).then(
     (posts) => {
       res.json(posts)
     }
@@ -199,4 +200,62 @@ routing.get('/getMyPosts/:uname', (req, res, next) => {
     }
   )
 })
+
+routing.get('/getPost/:pId', (req, res, next) => {
+  let pId= req.params.pId
+  user_mod.getPost(pId).then(
+    (posts) => {
+      res.json(posts)
+    }
+  ).catch(
+    (err) => {
+      next(err)
+    }
+  )
+})
+
+routing.put('/likePost/:pId', (req, res, next)=>{
+  let pId = req.params.pId
+  user_mod.likePost(pId).then((data)=>{
+    if(data){
+      res.send(data)
+    }
+  }).catch(
+    (err) => {
+      next(err)
+    }
+  )
+})
+
+routing.put('/unlikePost/:pId', (req, res, next)=>{
+  let pId = req.params.pId
+  user_mod.unlikePost(pId).then((data)=>{
+    if(data){
+      res.send(data)
+    }
+  }).catch(
+    (err) => {
+      next(err)
+    }
+  )
+})
+
+routing.put('/addComment/:pId/:uname', (req, res, next)=>{
+  let uname= req.params.uname
+  let pId = req.params.pId
+  let {comment} = req.body
+  // res.json(req.body)
+  user_mod.addComment(pId, uname, comment).then((data)=>{
+    if(data){
+      res.send(data)
+    }
+  }).catch(
+    (err) => {
+      next(err)
+    }
+  )
+})
+
+
+
 module.exports= routing;

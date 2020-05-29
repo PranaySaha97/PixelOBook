@@ -2,6 +2,15 @@ const dbModel= require( './connection' )
 
 const pixelOBookDB = {}
 
+pixelOBookDB.generateId = () => {
+    return dbModel.getPostCollection().then( ( model ) => {
+        return model.distinct( "_id" ).then( ( ids ) => {
+            let pId = Math.max( ...ids );
+            return pId + 1;
+        } )
+    } )
+}
+
 pixelOBookDB.findUser= ( uname, password ) =>{
     return dbModel.getUsersCollection().then( ( users )=>{
         return users.findOne( {"userName": uname},{'_id': 0} ).then( ( data )=>{
@@ -87,29 +96,59 @@ pixelOBookDB.updateBio = (username, bio) => {
 
 pixelOBookDB.addPost = (uname, post) => {
 
-    return dbModel.getUsersCollection().then(
-        (users) => {
-            return users.updateOne( {'userName': uname}, { $push: { 'posts': post } } ).then(
-                (update) => {
-                    if (update.nModified === 1){
-                        return "Image Posted Successfully."
-                    }else {
-                        let err= new Error (" Couldn't post image.")
-                        err.status= 400;
-                        throw err
-                    }
+    return pixelOBookDB.generateId().then(
+        (id) => {
+            post._id = id
+
+            return dbModel.getPostCollection().then(
+                (posts) =>{
+                    return posts.insertMany([post, ]).then((data)=>{
+                        if(data){
+                            return dbModel.getUsersCollection().then((users)=>{
+                                return users.updateOne( {'userName': uname}, { $push: { 'posts': post._id } }).then(
+                                    (update) =>{
+                                        if(update.nModified === 1){
+                                            return 'Image Posted Successfully'
+                                        }else{
+                                            let err= new Error (" Couldn't post image.")
+                                            err.status= 400;
+                                            throw err
+                                        }
+                                    }
+                                )
+                            })
+                        }
+                    })
                 }
             )
+
+            // return dbModel.getUsersCollection().then(
+            //     (users) => {
+            //         return users.updateOne( {'userName': uname}, { $push: { 'posts': post } } ).then(
+            //             (update) => {
+            //                 if (update.nModified === 1){
+            //                     return "Image Posted Successfully."
+            //                 }else {
+            //                     let err= new Error (" Couldn't post image.")
+            //                     err.status= 400;
+            //                     throw err
+            //                 }
+            //             }
+            //         )
+            //     }
+            // )
         }
     )
+    
 }
 
 pixelOBookDB.fetchAllPost = () => {
-    return dbModel.getUsersCollection().then(
-        (users) => {
-            return users.find( {}, {_id:0, "posts.postImg":1} ).then(
+
+    return dbModel.getPostCollection().then(
+        (posts) => {
+            return posts.find().then(
                 (data) => {
-                    if (data || data.length>0){
+                    if (data){
                         return data
                     }else{ 
                         let err= new Error ("Couldn't fetch posts.")
@@ -171,7 +210,7 @@ pixelOBookDB.getFollowersPost = (uname) => {
             return users.findOne({'userName': uname}, {'_id':0, 'following': 1} ).then(
                 (result) => {
                     if (result){
-                        return users.find({'userName': {$in: result.following}},{'_id':0, 'posts.postImg':1}).then(
+                        return users.find({'userName': {$in: result.following}},{'_id':0, 'posts':1}).then(
                             (data) => {
                                 if(data){
                                     return data
@@ -193,10 +232,10 @@ pixelOBookDB.getFollowersPost = (uname) => {
     )
 }
 
-pixelOBookDB.getMyPost = (uname) => {
-    return dbModel.getUsersCollection().then(
-        (users) => {
-            return users.findOne({'userName': uname}, {'_id':0, 'posts':1}).then(
+pixelOBookDB.getPost = (postId) => {
+    return dbModel.getPostCollection().then(
+        (posts) => {
+            return posts.findOne({'_id': postId}, {}).then(
                 (posts) => {
                     if (posts){
                         return posts
@@ -211,5 +250,78 @@ pixelOBookDB.getMyPost = (uname) => {
     )
 }
 
+pixelOBookDB.getMyPosts = (uname) => {
+    return dbModel.getUsersCollection().then( (users) =>{ 
+        return users.findOne({'userName': uname}, {'_id':0, 'posts': 1}).then(
+            (data) =>{
+                if (data){
+                    return dbModel.getPostCollection().then((posts)=>{
+                        return posts.find({'_id': {$in: data.posts}},{'_id':0, 'postImg':1}).then((data)=>{
+                            if(data){
+                                return data
+                            }else{
+                                let err= new Error ("No posts fetched.")
+                                err.status= 400;
+                                throw err
+                            }
+                        })
+                    })
+                }else{
+                    let err= new Error ("No posts fetched.")
+                    err.status= 400;
+                    throw err
+                }
+            }
+        )
+    })
+}
+
+
+pixelOBookDB.likePost = (postId) => {
+    return dbModel.getPostCollection().then((posts)=>{
+        return posts.updateOne({'_id': postId}, {$inc: {'likes': 1}}).then((update)=>{
+            if(update.nModified){
+                return "Post Liked!"
+            }else{
+                let err = new Error ('Unable to like.')
+                err.status= 400
+                throw err
+            }
+        })
+    })
+}
+
+
+pixelOBookDB.unlikePost = (postId) => {
+    return dbModel.getPostCollection().then((posts)=>{
+        return posts.updateOne({'_id': postId}, {$inc: {'likes': -1}}).then((update)=>{
+            if(update.nModified){
+                return "Post Unliked!"
+            }else{
+                let err = new Error ('Unable to dislike.')
+                err.status= 400
+                throw err
+            }
+        })
+    })
+}
+
+pixelOBookDB.addComment = (postId, user, comment) =>{
+    var comObj = {
+        'userName': user,
+        'comment': comment
+    }
+    return dbModel.getPostCollection().then((posts)=>{
+        return posts.updateOne({'_id': postId}, {$push: {'comments': comObj}}).then((update)=>{
+            if(update.nModified){
+                return "Comment Posted!"
+            }else{
+                let err = new Error ('Unable to post comment.')
+                err.status= 400
+                throw err
+            }
+        })
+    })
+}
 
 module.exports= pixelOBookDB;
