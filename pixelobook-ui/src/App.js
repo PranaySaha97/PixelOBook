@@ -12,6 +12,10 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import EditProfile from './components/EditProfile';
+import Createpost from './components/Createpost';
+import Viewprofile from './components/Viewprofile';
+import SearchUsers from './components/SearchUsers'
+
 
 export class App extends Component {
 
@@ -60,12 +64,28 @@ export class App extends Component {
           
           {
             this.state.isLoggedin?
+            
             <Dropdown className="navbar-nav ml-auto">
+              
               <Dropdown.Toggle variant="dark" id="dropdown-basic">
                   Welcome, {this.state.name}
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
+                <Dropdown.Item>
+                  <button className="btn btn-white btn-block">
+                    <Link to="/searchUsers">
+                      <span className="text-dark">Connect with others</span>
+                    </Link>
+                  </button>
+                </Dropdown.Item>
+                <Dropdown.Item className="navbar-nav nav-link">
+                  <button className="btn btn-white btn-block">
+                    <Link to="/viewProfile">
+                      <span className="text-dark">View profile</span>
+                    </Link>
+                  </button>
+                </Dropdown.Item>
                 <Dropdown.Item className="navbar-nav nav-link">
                   <button className="btn btn-white btn-block" >
                     <Link to="/editProfile">
@@ -93,9 +113,12 @@ export class App extends Component {
         <Route path="/register" exact component={Register} /> }  />
         <Route path="/dashboard" exact render={() => <Dashboard name = {this.state.name} userName = {this.state.userName} />} />
         <Route path="/editProfile" exact render={() => 
-        <EditProfile name = {this.state.name} 
-                    userName = {this.state.userName}
-                    setName={this.setName} />} />
+            <EditProfile name = {this.state.name} 
+                        userName = {this.state.userName}
+                        setName={this.setName} />} />
+        <Route path="/createPost" exact render={() => <Createpost name = {this.state.name} userName = {this.state.userName} />} />
+        <Route path="/viewProfile" exact render={() => <Viewprofile name = {this.state.name} userName = {this.state.userName} viewerUserName = {this.state.userName} />} />
+        <Route path="/searchUsers" exact render={ () => <SearchUsers userName = {this.state.userName} /> } />
       </Switch>
     </Router>
     )

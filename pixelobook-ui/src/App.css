@@ -26,13 +26,47 @@
   box-shadow: 0px 0px 20px -5px rgba(0,0,0,0.75);
 }
 
-@media (max-width: 640px) {
+.navBar {
+  width: 100%;
+  background-color: #111;
+  color: white;
+  padding: 10px;
+}
+
+.profile-pic {
+  height: auto;
+  width: 180px;
+}
+
+.search-img {
+  width: 100px;
+  height: auto;
+  object-fit: cover;
+}
+
+
+
+.post-pic img {
+   width: 100%;
+   height: auto;
+   object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .dashboard-section div {
+    display: none;
+  }
+}
+
+
+
+@media (max-width: 768px) {
   .banner-section img {
     display: none;
   }
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .banner-section img {
     position: absolute;
     height: 500px;
@@ -41,3 +75,4 @@
     padding: 2%;
   }
 }
+
