@@ -79,7 +79,7 @@ export class Dashboard extends Component {
 
     getPostImg = () => {
         const arrImg = [];
-        console.log(this.state.postPaths)
+        // console.log(this.state.postPaths)
         this.state.postPaths.forEach((path)=>{
             axios.get('http://localhost:1050/'+path,  { responseType: 'arraybuffer'} ).then(res=>{
                 // console.log(res.data)
@@ -92,10 +92,10 @@ export class Dashboard extends Component {
                 );
                 arrImg.push("data:;base64," + base64)
                 // console.log(arrImg)
-                if(this.state.postPaths.length == arrImg.length){
+                if(this.state.postPaths.length >= arrImg.length){
                     this.setState({
                         postImg: arrImg
-                    },()=>console.log(this.state.postImg));
+                    });
                 }
             })
         })
@@ -110,19 +110,21 @@ export class Dashboard extends Component {
             <div className="container-fluid">
                 {/* <Avatar shape="square" size={64} icon={<UserOutlined />} /> */}
                 <div className="row mt-3">
-                    <div className="col-md-3">
-                        {this.state.profilePic === null ?
-                            <Avatar shape="square" size={180} icon={<UserOutlined />} />
-                            :
-                            <img src={this.state.profilePic} className="profile-pic"/>
-                        }
-                        <br/>
-                        <span className="h3">{this.state.fullName}</span>
-                        <br/>
-                        <span className="h5">@{this.state.userName}</span>
-                        <br/>
-                        {this.state.bio}
-                        <br/>
+                    <div className="col-md-3 dashboard-section">
+                        <div>
+                            {this.state.profilePic === null ?
+                                <Avatar shape="square" size={180} icon={<UserOutlined />} />
+                                :
+                                <img src={this.state.profilePic} className="profile-pic"/>
+                            }
+                            <br/>
+                            <span className="h3">{this.state.fullName}</span>
+                            <br/>
+                            <span className="h5">@{this.state.userName}</span>
+                            <br/>
+                            {this.state.bio}
+                            <br/>
+                        </div>
                     </div>
                     <div className="col-md-6">
                         <Link to="/createPost">
@@ -140,8 +142,8 @@ export class Dashboard extends Component {
                             this.state.postImg.reverse().map((img)=>
                             <div className="container-fluid">
                                 <div className="card">
-                                    <div className="card-body">
-                                        <img src={img} className="post-pic grow"/>
+                                    <div className="card-body post-pic">
+                                        <img src={img} className="grow"/>
                                     </div>
                                 </div>
                                 <br/>
