@@ -26,9 +26,10 @@ getAllUsers = () => {
             userDet: res.data
         })
     }).catch(err=>{
-        this.setState({
-            errorMessage: err.response.data
-        })
+        console.log(err)
+        // this.setState({
+        //     errorMessage: err.response.data
+        // })
     })
 
     axios.get('http://localhost:1050/fetchAllUserNames').then(res=>{
@@ -36,9 +37,10 @@ getAllUsers = () => {
             users: res.data
         },()=>this.getProfileImages())
     }).catch(err=>{
-        this.setState({
-            errorMessage: err.response.data
-        })
+        console.log(err)
+        // this.setState({
+        //     errorMessage: err.response.data
+        // })
     })
 }
 
@@ -90,13 +92,15 @@ followUser = ( uNameToFollow ) => {
             followedUsers: arr
         })
     }).catch(err=>{
-        this.setState({
-            errorMessage: "Error occured during following try again later :("
-        })
+        console.log(err)
+        // this.setState({
+        //     errorMessage: "Error occured during following try again later :("
+        // })
     })
 }
 
 search = ( event ) => {
+    
     let value = event.target.value;
     let userArr = [];
     userArr = this.state.users.filter( user => {
@@ -144,7 +148,7 @@ search = ( event ) => {
                             </div>
                         </div>
                         <br/>
-                        {this.state.users.length > 0 ?
+                        {this.state.users.length > 0 && this.state.userDet?
                             this.state.users.map((user)=>
                                 this.state.userName != user.userName && user.userName != "Dummy_user"?
                                         <div>

@@ -101,7 +101,7 @@ export class Dashboard extends Component {
                                 this.getPostImg();
                             })
                         }).catch(err=>{
-                            console.log(err.response.data)
+                            console.log(err)
                         })
                     }
                     
@@ -113,7 +113,7 @@ export class Dashboard extends Component {
                 })
             }
             }).catch(err=>{
-                console.log(err.response.data)
+                console.log(err)
             })
         }
 
@@ -145,7 +145,7 @@ export class Dashboard extends Component {
                 })
                 
             }).catch(err=>{
-                console.log(err.response.data)
+                console.log(err)
             })
         })
         // console.log(arrImg)
