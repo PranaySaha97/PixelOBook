@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css'; 
 import { Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, LikeTwoTone } from '@ant-design/icons';
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import ThumbUpAltSharpIcon from '@material-ui/icons/ThumbUpAltSharp';
 
 export class Dashboard extends Component {
 
@@ -18,18 +19,19 @@ export class Dashboard extends Component {
              profilePic: null,
              posts: [],
              postPaths: [],
-             postImg: []
+             postImg: [],
+             posters: [],
+             captions: [],
+             liked: []
         }
 
-
         this.getUserDetails();
-        this.getPosts();
     }
 
     getUserDetails = () => {
         
         axios.get("http://localhost:1050/fetchUserDet/"+this.state.userName).then(res=>{
-            
+            // console.log(res.data)
             this.setState({
                 bio: res.data.bio,
                 fullName: res.data.fullName,
@@ -47,7 +49,16 @@ export class Dashboard extends Component {
                     this.setState({
                         profilePic: "data:;base64," + base64
                     })
+                // console.log("here")
+                this.getPosts();
+
+                }).catch(err=>{
+                    this.setState({
+                        profilePic: null
+                    })
+                    this.getPosts();
                 })
+                
             })
 
         })
@@ -56,26 +67,56 @@ export class Dashboard extends Component {
 
 
     getPosts = () => {
-        axios.get('http://localhost:1050/fetchAllPosts').then(res=>{
+        // console.log(this.state.userName)
+        axios.get('http://localhost:1050/getFollowersPosts/'+this.state.userName).then(res=>{
+            // console.log(res.data[0])
             // console.log(res.data)
-            this.setState({
-                posts: res.data
-            },()=>{
-                const arrPaths = [];
-                for (let userPost of this.state.posts) {
-                    for(let path of userPost.posts) {
-                        arrPaths.push(path.postImg);
+            if(res.data.length !== 0){
+                let postIdArr = []
+                for(let postIds of res.data){
+                    // console.log(postIds.posts)
+                    for(let ids of postIds.posts){
+                        postIdArr.push(ids)
                     }
                 }
-                
+                // console.log(postIdArr)
                 this.setState({
-                    postPaths: arrPaths
-                },()=>this.getPostImg())
-            });
+                    posts: postIdArr
+                },()=>{
+                    // console.log(this.state.posts)
+                    let arrPaths = []
+                    let arrCaptions = []
+                    for (let postId of this.state.posts){
+                        // console.log(postId)
+                        axios.get('http://localhost:1050/getPost/'+postId).then(res=>{
+                            // console.log(res.data.postImg)
+                            // console.log(res.data.aboutImg)
+                            arrPaths.push(res.data.postImg)
+                            arrCaptions.push(res.data.aboutImg)
+                            // console.log(arrPaths)
+                            this.setState({
+                                postPaths: arrPaths
+                            },()=>{
+                                // console.log(this.state.captions)
+                                this.getPostImg();
+                            })
+                        }).catch(err=>{
+                            console.log(err.response.data)
+                        })
+                    }
+                    
+                })
             
-        })
+            } else {
+                this.setState({
+                    posts: res.data
+                })
+            }
+            }).catch(err=>{
+                console.log(err.response.data)
+            })
+        }
 
-    }
 
     getPostImg = () => {
         const arrImg = [];
@@ -90,18 +131,39 @@ export class Dashboard extends Component {
                       '',
                 ),
                 );
-                arrImg.push("data:;base64," + base64)
-                // console.log(arrImg)
-                if(this.state.postPaths.length >= arrImg.length){
+                // arrImg.push("data:;base64," + base64)
+                axios.get('http://localhost:1050/getPost/'+this.state.posts[this.state.postPaths.indexOf(path)]).then(res=>{
+                    // console.log(res.data.aboutImg)
+                    let obj = {
+                        data: "data:;base64," + base64,
+                        caption: res.data.aboutImg
+                    }
+                    arrImg.push(obj)
                     this.setState({
                         postImg: arrImg
-                    });
-                }
+                    })
+                })
+                
+            }).catch(err=>{
+                console.log(err.response.data)
             })
         })
-        
-        
-        
+        // console.log(arrImg)
+       
+    }
+
+    liked = (img) => {
+        const liked = this.state.liked;
+        let postId = this.state.posts[this.state.postImg.indexOf(img)]
+        // console.log(postId)
+        axios.put('http://localhost:1050/likePost/'+postId).then(res=>{
+            // console.log(res.data);
+            liked.push(img);
+            this.setState(
+               { liked: liked}
+            )
+            
+        })
     }
 
 
@@ -129,7 +191,7 @@ export class Dashboard extends Component {
                     <div className="col-md-6">
                         <Link to="/createPost">
                             <button className="btn btn-secondary btn-block">                           
-                                <span className="text-white">Create post</span>
+                                <span className="text-white">Create a post</span>
                             </button>
                         </Link>
                         <br/>
@@ -143,12 +205,20 @@ export class Dashboard extends Component {
                             <div className="container-fluid">
                                 <div className="card">
                                     <div className="card-body post-pic">
-                                        <img src={img} className="grow"/>
+                                        <img src={img.data} className="grow"/>
+                                        <button className="btn btn-white grow" onClick={()=>this.liked(img)}>
+                                            <ThumbUpAltSharpIcon className={this.state.liked.includes(img)? 'text-primary' : 'text-secondary'}/>
+                                        </button>
+                                    </div>
+                                    <div className="card-footer">
+                                        {/* {this.state.captions[this.state.postImg.reverse().indexOf(img)]} */}
+                                        {img.caption}
                                     </div>
                                 </div>
                                 <br/>
                             </div>
-                        )
+                            )
+                            
                         }
                     </div>
                 </div>
