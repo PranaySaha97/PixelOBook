@@ -243,8 +243,7 @@ routing.put('/unlikePost/:pId', (req, res, next)=>{
 routing.put('/addComment/:pId/:uname', (req, res, next)=>{
   let uname= req.params.uname
   let pId = req.params.pId
-  let {comment} = req.body
-  // res.json(req.body)
+  let comment = req.body.comment
   user_mod.addComment(pId, uname, comment).then((data)=>{
     if(data){
       res.send(data)
@@ -254,6 +253,20 @@ routing.put('/addComment/:pId/:uname', (req, res, next)=>{
       next(err)
     }
   )
+})
+
+routing.delete('/deletePost/:pId/:uname' , (req, res, next)=>{
+    let pId = req.params.pId
+    let uname = req.params.uname
+    user_mod.deletePost(uname, pId).then( (data)=>{
+      if (data) {
+        res.send(data)
+      }
+    }).catch( 
+      (err)=>{
+        next(err)
+      }
+    )
 })
 
 

@@ -23,7 +23,7 @@ const Posts = Schema( {
     '_id': {type: String},
     'postName': {type: String, required: true},
     'postImg': {type: String, required: true},
-    'aboutImg': {type: String, required: true},
+    'aboutImg': {type: String, required: true, default: ''},
     'likes' : {type: Number, required: true},
     'uploadTime' : {type: String, required: true},
     'comments' : {type: [], required: true}

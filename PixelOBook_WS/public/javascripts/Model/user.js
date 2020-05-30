@@ -324,4 +324,29 @@ pixelOBookDB.addComment = (postId, user, comment) =>{
     })
 }
 
+
+pixelOBookDB.deletePost = (uname, postId) =>{
+    return dbModel.getUsersCollection().then((users)=>{
+        return users.updateOne({'userName': uname}, {$pull : {'posts': parseInt(postId)}}).then((update)=>{
+            if(update.nModified === 1){
+                return dbModel.getPostCollection().then((posts)=>{
+                    return posts.deleteOne({'_id': postId}).then((del)=>{
+                        if (del.deletedCount === 1){
+                            return 'Post deleted'
+                        }else{
+                            let err = new Error ('Unable to delete post.')
+                            err.status= 400
+                            throw err
+                        }
+                    })
+                })
+            }else{
+                let err = new Error ('Unable to update posts of user.')
+                err.status= 400
+                throw err
+            }
+        })
+    })
+}
+
 module.exports= pixelOBookDB;
