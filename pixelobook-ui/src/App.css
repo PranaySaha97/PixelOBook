@@ -45,16 +45,34 @@
 }
 
 
-
 .post-pic img {
    width: 100%;
    height: auto;
    object-fit: cover;
 }
 
+@media (max-width: 768px){
+  .search-img img {
+    width: 75px;
+    height: auto;
+    object-fit: cover;
+  }
+}
+@media (min-width: 768px){
+  .search-img img {
+    width: 100px;
+    height: auto;
+    object-fit: cover;
+  }
+}
+
 @media (max-width: 768px) {
+  .dashboard-section img {
+    height: auto;
+    width: 100px;
+  }
   .dashboard-section div {
-    display: none;
+    display: inline;
   }
 }
 

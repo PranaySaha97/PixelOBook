@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-
+import { Link } from 'react-router-dom'
 
 
 class SearchUsers extends Component {
@@ -24,13 +24,21 @@ getAllUsers = () => {
     axios.get('http://localhost:1050/fetchUserDet/'+this.state.userName).then(res=>{
         this.setState({
             userDet: res.data
-        },()=>console.log(this.state.userDet.following))
+        })
+    }).catch(err=>{
+        this.setState({
+            errorMessage: err.response.data
+        })
     })
 
     axios.get('http://localhost:1050/fetchAllUserNames').then(res=>{
         this.setState({
             users: res.data
         },()=>this.getProfileImages())
+    }).catch(err=>{
+        this.setState({
+            errorMessage: err.response.data
+        })
     })
 }
 
@@ -55,6 +63,11 @@ getProfileImages = () => {
             this.setState({
                 users: arrImg
             })
+            }).catch(err=>{
+                this.setState({
+                    errorMessage: err.response.data
+
+                })
             })
         } else {
             arrImg.push(user);
@@ -82,11 +95,36 @@ followUser = ( uNameToFollow ) => {
         })
     })
 }
+
+search = ( event ) => {
+    let value = event.target.value;
+    let userArr = [];
+    userArr = this.state.users.filter( user => {
+        // console.log(user)
+        if(user.fullName.toUpperCase().match(value.toUpperCase())){
+            return true
+        }
+    })
+    // console.log(userArr);
+    this.setState({
+        users: userArr
+    })
+    if(value === "") {
+        this.getAllUsers();
+    }
+}
     
     render() {
         return (
             <div className="container-fluid">
-                <div className="row mt-5">
+                <div className="mt-3">
+                    <Link to="/dashboard">
+                        <button className="btn btn-danger">
+                            back to dashboard
+                        </button>
+                    </Link>
+                </div>
+                <div className="row mt-2">
                     <div className="col-md-6 offset-md-3 col-sm-12">
                     {this.state.successMessage !== ""?
                             <div className="alert alert-success">{this.state.successMessage}</div>
@@ -101,21 +139,23 @@ followUser = ( uNameToFollow ) => {
                             </div>
                             <div className="card-body">
                                 <input type = "text" name = "search" className="form-control"
-                                placeholder = "Enter name to search" />
+                                placeholder = "Enter name to search" 
+                                onChange={this.search}/>
                             </div>
                         </div>
                         <br/>
                         {this.state.users.length > 0 ?
                             this.state.users.map((user)=>
-                                this.state.userName != user.userName?
+                                this.state.userName != user.userName && user.userName != "Dummy_user"?
                                         <div>
                                             <div className="card">
                                             <div className="card-body row">
-                                                <div className="col-3">
+                                                <div className="col-3 search-img">
                                                     {user.profilePic?
-                                                    <img src={user.profilePic} className="search-img" />
+                                                    <img src={user.profilePic} />
                                                     :
-                                                    <Avatar shape="square" size={100} icon={<UserOutlined />} />
+                                                    <img src={require('./Assets/no_img.JPG')} alt="no_img" />
+
                                                     }
                                                 </div>
                                                 <div className="col-6">

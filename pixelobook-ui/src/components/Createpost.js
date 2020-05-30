@@ -19,7 +19,7 @@ class Createpost extends Component {
     handleImage = (event) => {
         this.setState({
             img: event.target.files[0]
-        },()=>{console.log(this.state.img)})
+        })
     }
 
     handleCaption = (event) => {
@@ -35,10 +35,12 @@ class Createpost extends Component {
         const fd = new FormData();
         let time = new Date();
         fd.append('postImg',this.state.img,this.state.img.name);
-        let postObj = {
-            aboutImg: this.state.caption,
-            uploadTime: time
-        }
+        fd.append('aboutImg',this.state.caption);
+        // let postObj = {
+        //     aboutImg: this.state.caption,
+        //     uploadTime: time
+        // }
+        // console.log(fd)
         axios.put(url,fd).then(res=>{
             this.setState({
                 successMessage: res.data,
