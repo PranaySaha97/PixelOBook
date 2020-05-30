@@ -94,7 +94,7 @@ export class App extends Component {
                   </button>
                 </Dropdown.Item>
                 <Dropdown.Item className="navbar-nav nav-link">
-                  <button className="btn btn-white btn-block" onClick={this.logout}>Log out</button>
+                  <button className="btn btn-danger btn-block" onClick={this.logout}>Log out</button>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

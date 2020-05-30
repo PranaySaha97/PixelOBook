@@ -87,7 +87,7 @@
 @media (min-width: 768px) {
   .banner-section img {
     position: absolute;
-    height: 500px;
+    height: 80%;
     width: auto;
     margin: center;
     padding: 2%;
