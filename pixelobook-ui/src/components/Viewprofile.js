@@ -8,12 +8,13 @@ class Viewprofile extends Component {
         super(props)
     
         this.state = {
-            viewerUserName: this.props.viewerUserName,
-            userName: this.props.userName,
+            viewerUserName: this.props.location.state.viewerUserName,
+            userName: this.props.location.state.userName,
             userDet: null,
             profileImg: null,
             postPathArr: [],
-            postArr: []
+            postArr: [],
+            followingUser: false
         }
     
         this.getUserDet();
@@ -89,13 +90,25 @@ class Viewprofile extends Component {
         })
     }
 
+    followUser = ( uNameToFollow ) => {
+        let url = 'http://localhost:1050/followUser/'+this.state.viewerUserName+'/'+uNameToFollow;
+        axios.put(url,{}).then(res=>{
+            this.setState({
+                followingUser: true
+            })
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+    
+
     render() {
         return (
             <div className="container-fluid"> 
                 <div className="mt-2">
-                    <Link to="/dashboard">
+                    <Link to="/searchUsers">
                         <button className="btn btn-danger">
-                            back to dashboard
+                            back to search
                         </button>
                     </Link>
                 </div>
@@ -110,7 +123,11 @@ class Viewprofile extends Component {
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-md-3 col-sm-12">
-                                                <img src={this.state.profileImg} className="profile-pic" alt="profilepic" />
+                                                {this.state.userDet.profilePic?
+                                                    <img src={this.state.profileImg} className="profile-pic" alt="profilepic" />
+                                                    :
+                                                    <img src={require('./Assets/no_img.JPG')} className="profile-pic" alt="no_img" />
+                                                }
                                             </div>
                                             <div className="col-md-6 col-sm-12">
                                                 <span className="h3">{this.state.userDet.fullName}</span>
@@ -124,7 +141,17 @@ class Viewprofile extends Component {
                                                 <span className="text-info h5">followers: {this.state.userDet.followers.length}</span>
                                                 <br/>
                                                 <span className="text-info h5">following: {this.state.userDet.following.length}</span>
-                                                
+                                                <br/>
+                                                <button className="btn btn-info follow-btn" onClick={()=>this.followUser(this.state.userName)}
+                                                 disabled={
+                                                    this.state.userDet.following.includes(this.state.viewerUserName) || this.state.followingUser ? true : false}>
+                                                    {
+                                                        this.state.userDet.following.includes(this.state.viewerUserName) || this.state.followingUser?
+                                                            <span>following</span>
+                                                            :
+                                                            <span>follow</span>
+                                                    }
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -148,7 +175,8 @@ class Viewprofile extends Component {
                                                 </div>
                                            ))
                                         :
-                                        null
+                                        <div className="alert alert-dark mt-2">No posts by {this.state.userName} yet</div>
+
                                     }
                                 </div>
                             </div> 

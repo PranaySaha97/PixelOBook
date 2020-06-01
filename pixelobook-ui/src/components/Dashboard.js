@@ -206,13 +206,14 @@ export class Dashboard extends Component {
                                 <div className="card">
                                     <div className="card-body post-pic">
                                         <img src={img.data} className="grow"/>
-                                        <button className="btn btn-white grow" onClick={()=>this.liked(img)}>
-                                            <ThumbUpAltSharpIcon className={this.state.liked.includes(img)? 'text-primary' : 'text-secondary'}/>
-                                        </button>
+                                        <br/>
+                                        {img.caption}
                                     </div>
                                     <div className="card-footer">
                                         {/* {this.state.captions[this.state.postImg.reverse().indexOf(img)]} */}
-                                        {img.caption}
+                                        <button className="btn btn-white grow" onClick={()=>this.liked(img)}>
+                                            <ThumbUpAltSharpIcon className={this.state.liked.includes(img)? 'text-primary' : 'text-secondary'}/>
+                                        </button>
                                     </div>
                                 </div>
                                 <br/>
