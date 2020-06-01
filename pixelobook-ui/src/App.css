@@ -51,6 +51,12 @@
    object-fit: cover;
 }
 
+.follow-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
 @media (max-width: 768px){
   .search-img img {
     width: 75px;
