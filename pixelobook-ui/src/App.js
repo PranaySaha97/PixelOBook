@@ -81,7 +81,7 @@ export class App extends Component {
                 </Dropdown.Item>
                 <Dropdown.Item className="navbar-nav nav-link">
                   <button className="btn btn-white btn-block">
-                    <Link to="/viewProfile">
+                    <Link to='/viewProfile'>
                       <span className="text-dark">View profile</span>
                     </Link>
                   </button>
@@ -117,7 +117,7 @@ export class App extends Component {
                         userName = {this.state.userName}
                         setName={this.setName} />} />
         <Route path="/createPost" exact render={() => <Createpost name = {this.state.name} userName = {this.state.userName} />} />
-        <Route path="/viewProfile" exact render={() => <Viewprofile name = {this.state.name} userName = {this.state.userName} viewerUserName = {this.state.userName} />} />
+        <Route path="/viewProfile" exact render={() => <Viewprofile viewerUserName = {this.state.userName} userName= {this.state.userName} />} />
         <Route path="/searchUsers" exact render={ () => <SearchUsers userName = {this.state.userName} /> } />
       </Switch>
     </Router>
