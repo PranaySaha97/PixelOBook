@@ -142,16 +142,19 @@ class Viewprofile extends Component {
                                                 <br/>
                                                 <span className="text-info h5">following: {this.state.userDet.following.length}</span>
                                                 <br/>
-                                                <button className="btn btn-info follow-btn" onClick={()=>this.followUser(this.state.userName)}
-                                                 disabled={
-                                                    this.state.userDet.following.includes(this.state.viewerUserName) || this.state.followingUser ? true : false}>
-                                                    {
-                                                        this.state.userDet.following.includes(this.state.viewerUserName) || this.state.followingUser?
-                                                            <span>following</span>
-                                                            :
-                                                            <span>follow</span>
-                                                    }
-                                                </button>
+                                                {this.state.userName == this.state.viewerUserName?
+                                                    null:
+                                                    <button className="btn btn-info follow-btn" onClick={()=>this.followUser(this.state.userName)}
+                                                    disabled={
+                                                        this.state.userDet.following.includes(this.state.viewerUserName) || this.state.followingUser ? true : false}>
+                                                        {
+                                                            this.state.userDet.following.includes(this.state.viewerUserName) || this.state.followingUser?
+                                                                <span>following</span>
+                                                                :
+                                                                <span>follow</span>
+                                                        }
+                                                    </button>
+                                                }   
                                             </div>
                                         </div>
                                     </div>
