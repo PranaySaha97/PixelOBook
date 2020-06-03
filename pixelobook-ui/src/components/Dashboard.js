@@ -5,6 +5,8 @@ import { UserOutlined, LikeTwoTone } from '@ant-design/icons';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import ThumbUpAltSharpIcon from '@material-ui/icons/ThumbUpAltSharp';
+import CommentIcon from '@material-ui/icons/Comment';
+
 
 export class Dashboard extends Component {
 
@@ -136,7 +138,8 @@ export class Dashboard extends Component {
                     // console.log(res.data.aboutImg)
                     let obj = {
                         data: "data:;base64," + base64,
-                        caption: res.data.aboutImg
+                        caption: res.data.aboutImg,
+                        id: res.data._id
                     }
                     arrImg.push(obj)
                     this.setState({
@@ -203,9 +206,10 @@ export class Dashboard extends Component {
                             :
                             this.state.postImg.reverse().map((img)=>
                             <div className="container-fluid">
-                                <div className="card">
+                                <Link to={'post/'+this.state.userName+'/'+img.id}>
+                                <div className="card grow">
                                     <div className="card-body post-pic">
-                                        <img src={img.data} className="grow"/>
+                                        <img src={img.data}/>
                                         <br/>
                                         {img.caption}
                                     </div>
@@ -214,8 +218,11 @@ export class Dashboard extends Component {
                                         <button className="btn btn-white grow" onClick={()=>this.liked(img)}>
                                             <ThumbUpAltSharpIcon className={this.state.liked.includes(img)? 'text-primary' : 'text-secondary'}/>
                                         </button>
+                                        &nbsp;
+                                        <CommentIcon />&nbsp; click on post to add comment
                                     </div>
                                 </div>
+                                </Link>
                                 <br/>
                             </div>
                             )
