@@ -14,7 +14,8 @@ import Dashboard from './components/Dashboard';
 import EditProfile from './components/EditProfile';
 import Createpost from './components/Createpost';
 import Viewprofile from './components/Viewprofile';
-import SearchUsers from './components/SearchUsers'
+import SearchUsers from './components/SearchUsers';
+import Post from './components/Post';
 
 
 export class App extends Component {
@@ -58,7 +59,7 @@ export class App extends Component {
       <Router>
       <div>
         <nav className="navbar navbar-expand-lg bg-custom">
-          <span className="navbar-brand">
+          <span className="navbar-brand title">
             Pixel-O-Book
           </span>
           
@@ -119,6 +120,7 @@ export class App extends Component {
         <Route path="/createPost" exact render={() => <Createpost name = {this.state.name} userName = {this.state.userName} />} />
         <Route path="/viewProfile" exact component={Viewprofile} />
         <Route path="/searchUsers" exact render={ () => <SearchUsers userName = {this.state.userName} /> } />
+        <Route path="/dashboard/post/:userName/:id" exact component={Post} />
       </Switch>
     </Router>
     )

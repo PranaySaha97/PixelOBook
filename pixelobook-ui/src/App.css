@@ -4,6 +4,10 @@
   height: 50px;
 }
 
+.title {
+  font-family: monospace;
+}
+
 .nav-button-main{
   background-color: black;
   color: white;
