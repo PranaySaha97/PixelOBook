@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ThumbUpAltSharpIcon from '@material-ui/icons/ThumbUpAltSharp';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import CommentIcon from '@material-ui/icons/Comment';
 
 class Viewprofile extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class Viewprofile extends Component {
 
     getUserDet = () => {
         axios.get("http://localhost:1050/fetchUserDet/"+this.state.userName).then(res=>{
-            console.log(res.data);
+            // console.log(res.data);
             this.setState({
                 userDet: res.data
             },()=>{
@@ -50,12 +51,12 @@ class Viewprofile extends Component {
     }
     
     getPosts = () => {
-        console.log("here")
+        // console.log("here")
         const pathsArr = [];
         for(let id of this.state.userDet.posts) {
-            console.log(id)
+            // console.log(id)
             axios.get('http://localhost:1050/getPost/'+id).then(res=>{
-                console.log(res.data.postImg)
+                // console.log(res.data.postImg)
                 pathsArr.push(res.data)
                 this.setState({
                     postPathArr: pathsArr
@@ -84,7 +85,7 @@ class Viewprofile extends Component {
                 postArr.push(obj)
                 this.setState({
                     postArr: postArr
-                },()=>console.log(this.state.postArr))
+                })
 
             })
         })
@@ -106,11 +107,9 @@ class Viewprofile extends Component {
         return (
             <div className="container-fluid"> 
                 <div className="mt-2">
-                    <Link to="/searchUsers">
-                        <button className="btn btn-danger">
-                            back to search
+                        <button className="btn btn-danger" onClick={()=>{this.props.history.goBack()}}>
+                            back to previous page
                         </button>
-                    </Link>
                 </div>
                 <div className="row mt-2">
                     <div className="col-md-8 offset-md-2 col-sm-12">
@@ -173,7 +172,11 @@ class Viewprofile extends Component {
                                                             <span className="text-seconday h5">{post.likes}</span>
                                                             &nbsp;
                                                             <ThumbUpAltSharpIcon className="text-primary" />
+                                                            &nbsp;
+                                                            <span className="text-seconday h5">{this.state.postPathArr[this.state.postArr.indexOf(post)].comments.length}</span>
+                                                            <CommentIcon className="text-secondary"/>
                                                         </div>
+                                                        
                                                     </div>
                                                 </div>
                                            ))

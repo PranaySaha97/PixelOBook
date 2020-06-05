@@ -206,7 +206,7 @@ export class Dashboard extends Component {
                             :
                             this.state.postImg.reverse().map((img)=>
                             <div className="container-fluid">
-                                <Link to={'post/'+this.state.userName+'/'+img.id}>
+                                <Link to={'/post/'+this.state.userName+'/'+img.id}>
                                 <div className="card grow">
                                     <div className="card-body post-pic">
                                         <img src={img.data}/>

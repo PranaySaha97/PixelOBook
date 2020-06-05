@@ -91,11 +91,9 @@ export class Post extends Component {
             <div className="container-fluid">
                 <div className="row mt-3">
                     <div className="col-md-3 col-sm-12">
-                        
                             <button className="btn btn-danger" onClick={()=>{this.props.history.goBack()}}>
                                 back to dashboard
                             </button>
-                        
                     </div>
                     <div className="col-md-6 col-sm-12">
                         {
