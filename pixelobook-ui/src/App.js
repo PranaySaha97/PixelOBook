@@ -120,7 +120,7 @@ export class App extends Component {
         <Route path="/createPost" exact render={() => <Createpost name = {this.state.name} userName = {this.state.userName} />} />
         <Route path="/viewProfile" exact component={Viewprofile} />
         <Route path="/searchUsers" exact render={ () => <SearchUsers userName = {this.state.userName} /> } />
-        <Route path="/dashboard/post/:userName/:id" exact component={Post} />
+        <Route path="/post/:userName/:id" exact component={Post} />
       </Switch>
     </Router>
     )
