@@ -206,13 +206,14 @@ export class Dashboard extends Component {
                             :
                             this.state.postImg.reverse().map((img)=>
                             <div className="container-fluid">
-                                <Link to={'/post/'+this.state.userName+'/'+img.id}>
                                 <div className="card grow">
-                                    <div className="card-body post-pic">
-                                        <img src={img.data}/>
-                                        <br/>
-                                        {img.caption}
-                                    </div>
+                                    <Link to={'/post/'+this.state.userName+'/'+img.id}>
+                                        <div className="card-body post-pic">
+                                            <img src={img.data}/>
+                                            <br/>
+                                            {img.caption}
+                                        </div>
+                                    </Link>
                                     <div className="card-footer">
                                         {/* {this.state.captions[this.state.postImg.reverse().indexOf(img)]} */}
                                         <button className="btn btn-white grow" onClick={()=>this.liked(img)}>
@@ -222,7 +223,6 @@ export class Dashboard extends Component {
                                         <CommentIcon />&nbsp; click on post to add comment
                                     </div>
                                 </div>
-                                </Link>
                                 <br/>
                             </div>
                             )

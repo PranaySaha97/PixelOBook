@@ -48,9 +48,7 @@ export class Post extends Component {
     }
 
     liked = (img) => {
-        
         let postId = this.state.post_id
-        // console.log(postId)
         axios.put('http://localhost:1050/likePost/'+postId).then(res=>{
             this.setState({
                 liked: true
@@ -62,15 +60,15 @@ export class Post extends Component {
         let value = event.target.value;
         this.setState({
             comment: value
-        },()=>console.log(this.state.comment))
+        })
     }
+    
     postComment = ( event ) => {
         event.preventDefault();
         let obj = {
             comment: this.state.comment
         }
         axios.put('http://localhost:1050/addComment/'+this.state.post_id+'/'+this.state.userName, obj).then(res=>{
-            console.log(res.data)
             this.setState({
                 successMessage: res.data,
                 errorMessage: ""
@@ -116,15 +114,17 @@ export class Post extends Component {
                                         <ThumbUpAltSharpIcon className={this.state.liked? 'text-primary' : 'text-secondary' }/>
                                     </button>
                                     &nbsp;
-                                    <form onSubmit={this.postComment}>
-                                        <div className="form-group">
-                                            <label htmlFor="comment">Add your comment</label>
-                                            <input type="text" className="form-control" onChange={this.handleCommentChange} />
-                                        </div>
-                                        <button type="submit" className="btn btn-info grow" onClick={()=>this.liked()}>
-                                                Post comment<CommentIcon />
-                                        </button>
-                                    </form>
+                                    <div>
+                                        <form onSubmit={this.postComment}>
+                                            <div className="form-group">
+                                                <label htmlFor="comment">Add your comment</label>
+                                                <input type="text" className="form-control" onChange={this.handleCommentChange} />
+                                            </div>
+                                            <button type="submit" className="btn btn-info grow">
+                                                    Post comment<CommentIcon />
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                            

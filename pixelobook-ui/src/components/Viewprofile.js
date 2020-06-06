@@ -3,6 +3,7 @@ import axios from 'axios';
 import ThumbUpAltSharpIcon from '@material-ui/icons/ThumbUpAltSharp';
 import { useHistory } from 'react-router-dom';
 import CommentIcon from '@material-ui/icons/Comment';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 class Viewprofile extends Component {
     constructor(props) {
@@ -101,6 +102,22 @@ class Viewprofile extends Component {
             console.log(err)
         })
     }
+
+    deletePost = ( pid ) => {
+        axios.delete('http://localhost:1050/deletePost/' + pid + "/" + this.state.userName).then(res=>{
+            let postArr = this.state.postArr;
+            this.setState({
+                postPathArr: [],
+                postArr: []
+            })
+            this.getPosts();
+
+        })
+    }
+
+    unfollowUser = () => {
+
+    }
     
 
     render() {
@@ -119,6 +136,7 @@ class Viewprofile extends Component {
                             :
                             <div>
                                 <div className="card">
+                                    
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-md-3 col-sm-12">
@@ -143,16 +161,18 @@ class Viewprofile extends Component {
                                                 <br/>
                                                 {this.state.userName == this.state.viewerUserName?
                                                     null:
-                                                    <button className="btn btn-info follow-btn" onClick={()=>this.followUser(this.state.userName)}
-                                                    disabled={
-                                                        this.state.userDet.followers.includes(this.state.viewerUserName) || this.state.followingUser ? true : false}>
+                                                    <div className="follow-btn">
                                                         {
                                                             this.state.userDet.followers.includes(this.state.viewerUserName) || this.state.followingUser?
-                                                                <span>following</span>
+                                                                <button className="btn btn-info" onClick={()=>this.unfollowUser()} disabled="true">
+                                                                    <span>following</span>
+                                                                </button>
                                                                 :
-                                                                <span>follow</span>
+                                                                <button className="btn btn-info" onClick={()=>this.followUser(this.state.userName)}>
+                                                                    <span>follow</span>
+                                                                </button>
                                                         }
-                                                    </button>
+                                                    </div>
                                                 }   
                                             </div>
                                         </div>
@@ -175,6 +195,13 @@ class Viewprofile extends Component {
                                                             &nbsp;
                                                             <span className="text-seconday h5">{this.state.postPathArr[this.state.postArr.indexOf(post)].comments.length}</span>
                                                             <CommentIcon className="text-secondary"/>
+                                                            {this.state.userName === this.state.viewerUserName?
+                                                                <button className=" btn btn-white float-right" onClick={()=>this.deletePost(this.state.postPathArr[this.state.postArr.indexOf(post)]._id)}>
+                                                                    <DeleteIcon className="text-danger" />
+                                                                </button>
+                                                                :
+                                                                null
+                                                            }
                                                         </div>
                                                         
                                                     </div>

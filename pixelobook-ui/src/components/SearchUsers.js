@@ -151,23 +151,26 @@ search = ( event ) => {
                         {this.state.users.length > 0 && this.state.userDet?
                             this.state.users.map((user)=>
                                 this.state.userName != user.userName && user.userName != "Dummy_user"?
-                                        <Link to={ { pathname: '/viewProfile', state: { viewerUserName: this.state.userName, userName: user.userName } }}>
                                             <div>
                                                 <div className="card">
                                                 <div className="card-body row">
-                                                    <div className="col-3 search-img">
-                                                        {user.profilePic?
-                                                        <img src={user.profilePic} />
-                                                        :
-                                                        <img src={require('./Assets/no_img.JPG')} alt="no_img" />
+                                                    <Link to={ { pathname: '/viewProfile', state: { viewerUserName: this.state.userName, userName: user.userName } }}>
+                                                        <div className="col-3 search-img">
+                                                            {user.profilePic?
+                                                            <img src={user.profilePic} />
+                                                            :
+                                                            <img src={require('./Assets/no_img.JPG')} alt="no_img" />
 
-                                                        }
-                                                    </div>
-                                                    <div className="col-6">
-                                                        <span className="h5">{user.fullName}</span>
-                                                        <br/>
-                                                        <span className="text-dark">@{user.userName}</span>
-                                                    </div>
+                                                            }
+                                                        </div>
+                                                    </Link>
+                                                        <div className="col-6">
+                                                            <span className="h5">{user.fullName}</span>
+                                                            <br/>
+                                                            <span className="text-dark">@{user.userName}</span>
+                                                        </div>
+                                                    
+
                                                     <div className="col-3">
                                                         <button className="btn btn-info float-right" 
                                                             onClick={()=>this.followUser(user.userName)}
@@ -185,7 +188,6 @@ search = ( event ) => {
                                                 </div>
                                                 <br/>
                                             </div>
-                                        </Link>
                                         :
                                         null
                                 
